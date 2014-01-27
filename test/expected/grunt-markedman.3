@@ -1,0 +1,108 @@
+.TH "GRUNT\-MARKEDMAN" "3" "January 2014" "0.0.0" ""
+.SH "NAME"
+\fBgrunt-markedman\fR
+.QP
+.P
+a grunt\-task for using marked\-man to generate manpages from markdown
+
+.
+.P
+Made possible by the guys behind marked\-man \fIhttps://github\.com/kapouer/marked\-man\fR and grunt\. Thanks!
+.SH Getting Started
+.P
+This plugin requires Grunt\.
+.P
+If you haven\'t used Grunt \fIhttp://gruntjs\.com/\fR before, be sure to check out the Getting Started \fIhttp://gruntjs\.com/getting\-started\fR guide, as it explains how to create a Gruntfile \fIhttp://gruntjs\.com/sample\-gruntfile\fR as well as install and use Grunt plugins\. Once you\'re familiar with that process, you may install this plugin with this command:
+.P
+.RS 2
+.EX
+npm install grunt\-markedman \-\-save\-dev
+.EE
+.RE
+.P
+Once the plugin has been installed, it may be enabled inside your Gruntfile with this line of JavaScript:
+.P
+.RS 2
+.EX
+grunt\.loadNpmTasks(\'grunt\-markedman\');
+.EE
+.RE
+.SH The "markedman" task
+.SS Overview
+.P
+In your project\'s Gruntfile, add a section named \fBmarkedman\fR to the data object passed into \fBgrunt\.initConfig()\fR\|\.
+.P
+.RS 2
+.EX
+markedman: {
+  options: {
+    version: \'<%= pkg\.version %>\',
+    section: \'3\'
+  },
+  readme: {
+    files: [
+      {src: \'README\.md\', dest: \'<%= pkg\.name %>\.3\' }
+    ]
+  },
+  main: {
+    files: [
+      {src: \'doc/furtherDocs\.md\', dest: \'<%= pkg\.name %>\.3\.as\' },
+      {src: \'doc/furtherDocs\.md\', dest: \'<%= pkg\.name %>\.3\.de\' }
+    ]
+  }
+},
+.EE
+.RE
+.SS Options
+.SS options\.version
+.P
+Type: \fBString\fR
+Default value: \fB\'\'\fR
+.P
+The version of your app\.
+.SS options\.section
+.P
+Type: \fBString\fR
+Default value: \fB\'1\'\fR
+.P
+The man\-section, see wikipedia \fIhttp://en\.wikipedia\.org/wiki/Man_page\fR\|\. In general use (1) for commands and (8) for services\.
+.SS options\.manual
+.P
+Type: \fBString\fR
+Default value: \fB\'\'\fR
+.P
+The MANUAL string shown in the manpage header\. See marked\-man doku \fIhttps://github\.com/kapouer/marked\-man\fR\|\.
+.SS options\.src
+.P
+Type: \fBString\fR
+Default value: \fB\'readme\.md\'\fR
+.P
+Some markdown file to convert to man\.
+.SS options\.dest
+.P
+Type: \fBString\fR
+Default value: \fB\'dist/readme\.1\.man\'\fR
+.P
+The destination of the generated manpage\.
+.SS Usage Examples
+.SS Default Options
+.P
+.RS 2
+.EX
+grunt\.initConfig({
+  pkg: grunt\.file\.readJSON(\'package\.json\'),
+
+
+  markedman: {
+    options: {
+      version: \'<%= pkg\.version %>\',
+      section: \'1\',
+      dest: \'dist/docs/<%= pkg\.name %>\.1\'
+    }
+  },
+});
+.EE
+.RE
+.SH Contributing
+.P
+In lieu of a formal styleguide, take care to maintain the existing coding style\. Add unit tests for any new or changed functionality\. Lint and test your code using Grunt \fIhttp://gruntjs\.com/\fR\|\.

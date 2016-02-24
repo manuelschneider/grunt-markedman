@@ -21,13 +21,12 @@ module.exports = function(grunt) {
     });
 
     var done = this.async();
-    var jobs = { errored: 0, pending: 0 };
+    var jobs = { errored: 0, pending: this.files.length };
 
     this.files.forEach(function(file) {
 
       var markedMan = require('marked-man');
 
-      jobs.pending++;
       markedMan(grunt.file.read(file.src), {
         version: options.version,
         section: options.section,
@@ -38,13 +37,12 @@ module.exports = function(grunt) {
         if (err instanceof Error) {
           jobs.errored++;
           grunt.log.error('File "' + file.dest + '"could NOT be created.');
-          done(err);
         } else {
           grunt.file.write(file.dest, result);
           grunt.log.writeln('File "' + file.dest + '" created.');
-          if (jobs.errored === 0 && jobs.pending === 0) {
-            done();
-          }
+        }
+        if (jobs.pending === 0) {
+          done(jobs.errored === 0);
         }
       });
     });
